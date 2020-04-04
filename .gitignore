@@ -1,4 +1,5 @@
 server/dist-newstyle/
+server/dist/
 server/*~
 server-exe
 *.exe
