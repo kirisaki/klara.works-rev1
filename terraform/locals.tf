@@ -1,7 +1,10 @@
 locals {
-    project = var.project[terraform.workspace]
-    credential = local.credentials[terraform.workspace]
+    k = terraform.workspace
+    name = "klaraworks-${local.k}"
+    project = var.project[local.k]
+    domain = var.domain[local.k]
+    credential = file(local.credentials[local.k])
     credentials = {
-        dev = file("klaraworks-deploy-dev.json")
+        dev = "klaraworks-deploy-dev.json"
     }
 }
