@@ -7,10 +7,9 @@ terraform {
 }
 
 provider "google-beta" {
-  credentials = file("klaraworks-deploy-dev.json")
-  project     = var.project_dev
+  credentials = local.credential
+  project     = local.project
   region      = var.region
   version     = "~> 3.14.0"
-  alias       = "dev"
 }
 

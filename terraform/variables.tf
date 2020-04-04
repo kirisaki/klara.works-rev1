@@ -1,3 +1,5 @@
-variable "project" {}
+variable "project" {
+    type = map(string)
+}
 variable "region" {}
 variable "zone" {}
