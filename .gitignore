@@ -1,0 +1,13 @@
+server/dist-newstyle/
+server/*~
+server-exe
+*.exe
+
+terraform/*.tfvars
+terraform/.terraform/
+klaraworks-deploy-dev.json
+klaraworks-deploy-prod.json
+klaraworks-tfstate.json
+
+client/node_modules/
+client/dist/
