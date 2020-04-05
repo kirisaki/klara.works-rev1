@@ -1,0 +1,8 @@
+commonLabels:
+  app: prototip-2
+
+resources:
+- deployment.yaml
+- cert.yaml
+- ingress.yaml
+- service.yaml
