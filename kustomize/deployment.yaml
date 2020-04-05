@@ -30,8 +30,5 @@ spec:
                 key: password
           readinessProbe:
             httpGet:
-              path: /
+              path: /health
               port: 8080
-              httpHeaders:
-              - name: X-HEALTH-CHECK
-                value: Are you still alive?
