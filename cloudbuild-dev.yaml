@@ -54,6 +54,10 @@ steps:
   - set
   - namesuffix
   - dev
+  env:
+  - CLOUDSDK_COMPUTE_ZONE=$_ZONE
+  - CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER
+  - GCLOUD_PROJECT=$_NAME
 
 - name: gcr.io/$PROJECT_ID/kustomize
   id: Inject image name
@@ -63,6 +67,10 @@ steps:
   - set
   - image
   - '$PROJECT_ID-image=gcr.io/$PROJECT_ID/prototip-2:$TAG_NAME'
+  env:
+  - CLOUDSDK_COMPUTE_ZONE=$_ZONE
+  - CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER
+  - GCLOUD_PROJECT=$_NAME
 
 - name: gcr.io/$PROJECT_ID/kustomize
   id: Deploy
