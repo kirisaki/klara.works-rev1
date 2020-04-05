@@ -55,10 +55,6 @@ steps:
   - namesuffix
   - --
   - -dev
-  env:
-  - CLOUDSDK_COMPUTE_ZONE=$_ZONE
-  - CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER
-  - GCLOUD_PROJECT=$_NAME
 
 - name: gcr.io/$PROJECT_ID/kustomize
   id: Inject image name
@@ -68,10 +64,6 @@ steps:
   - set
   - image
   - '$_NAME-image=gcr.io/$PROJECT_ID/$_NAME:$SHORT_SHA'
-  env:
-  - CLOUDSDK_COMPUTE_ZONE=$_ZONE
-  - CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER
-  - GCLOUD_PROJECT=$_NAME
 
 - name: gcr.io/$PROJECT_ID/kustomize
   id: Deploy
@@ -80,9 +72,11 @@ steps:
   - kustomize/
   env:
   - APPLY=true
-  - CLOUDSDK_COMPUTE_ZONE=$_ZONE
-  - CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER
-  - GCLOUD_PROJECT=$_NAME
+
+env:
+- CLOUDSDK_COMPUTE_ZONE=$_ZONE
+- CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER
+- GCLOUD_PROJECT=$_NAME
 
 timeout: 2400s
 
