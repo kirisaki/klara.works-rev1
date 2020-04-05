@@ -7,6 +7,8 @@ resource "google_cloudbuild_trigger" "ci" {
     _NAME = local.name
     _CLUSTER = google_container_cluster.primary.name
     _ZONE = google_container_cluster.primary.location
+    _WEB_USER = var.web_user
+    _WEB_PASSWORD = var.web_password
   }
 
   github {

@@ -47,6 +47,24 @@ steps:
 
 # deploy
 - name: gcr.io/$PROJECT_ID/kustomize
+  id: Inject user
+  dir: kustomize
+  args:
+  - edit
+  - add
+  - secret
+  - user=$_WEB_USER
+
+- name: gcr.io/$PROJECT_ID/kustomize
+  id: Inject password
+  dir: kustomize
+  args:
+  - edit
+  - add
+  - secret
+  - password=$_WEB_PASSWORD
+
+- name: gcr.io/$PROJECT_ID/kustomize
   id: Inject suffix
   dir: kustomize
   args:

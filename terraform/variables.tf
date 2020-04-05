@@ -1,23 +1,31 @@
 variable "project" {
-    type = map(string)
+  type = map(string)
 }
 
 variable "domain" {
-    type = map(string)
+  type = map(string)
 }
 
 variable "region" {
-    type = string
+  type = string
 }
 
 variable "zone" {
-    type = string
+  type = string
 }
 
 variable "owner" {
-    type = string
+  type = string
 }
 
 variable "repo" {
-    type = string
+  type = string
+}
+
+variable "web_user" {
+  type = string
+}
+
+variable "web_password" {
+  type = string
 }
