@@ -2,6 +2,13 @@ resource "google_cloudbuild_trigger" "ci" {
   provider = google-beta
   project = local.project
   name = terraform.workspace
+
+  substitutions = {
+    _NAME = local.name
+    _CLUSTER = google_container_cluster.primary.name
+    _ZONE = google_container_cluster.primary.location
+  }
+
   github {
     owner = var.owner
     name = var.repo
