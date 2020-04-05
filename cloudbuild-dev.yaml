@@ -1,1 +1,44 @@
-steps: []
+steps:
+
+- name: gcr.io/cloud-builders/gsutil
+  id: Restore cache
+  args:
+  - cp
+  - gs://prototip-2-cache/cabal.tar.gz
+  - /workspace/cabal.tar.gz
+
+- name: 'haskell:8.8.2'
+  id: Test & Build server
+  entrypoint: /bin/sh
+  args:
+  - -c
+  - |
+      tar xzf cabal.tar.gz -C /builder/home/ &&\
+      cd server && cabal update && cabal build &&\
+      cabal test &&\
+      cabal install --install-method=copy --installdir=dist &&\
+      cd /builder/home && tar czf /workspace/cabal.tar.gz .cabal/
+
+- name: gcr.io/cloud-builders/gsutil
+  id: Store cache
+  args:
+  - cp
+  - /workspace/cabal.tar.gz
+  - gs://prototip-2-cache/cabal.tar.gz
+
+- name: gcr.io/cloud-builders/docker
+  id: Build docker image
+  args:
+  - 'build'
+  - '-t'
+  - 'gcr.io/$PROJECT_ID/$_NAME:$TAG_NAME'
+  - '.'
+
+- name: gcr.io/cloud-builders/docker
+  id: Push docker image
+  args:
+  - 'push'
+  - 'gcr.io/$PROJECT_ID/$_NAME:$TAG_NAME'
+
+timeout: 2400s
+
