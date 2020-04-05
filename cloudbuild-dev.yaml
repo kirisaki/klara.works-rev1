@@ -53,6 +53,8 @@ steps:
   - edit
   - add
   - secret
+  - klaraworks
+  - --from-literal
   - user=$_WEB_USER
 
 - name: gcr.io/$PROJECT_ID/kustomize
@@ -62,6 +64,8 @@ steps:
   - edit
   - add
   - secret
+  - klaraworks
+  - --from-literal
   - password=$_WEB_PASSWORD
 
 - name: gcr.io/$PROJECT_ID/kustomize

@@ -5,6 +5,7 @@
 {-# LANGUAGE TypeOperators #-}
 module Main where
 
+import qualified Data.ByteString.Char8 as BSC
 import Data.CaseInsensitive
 import Data.Extensible
 import Data.Proxy
@@ -13,10 +14,12 @@ import Lucid
 import Lucid.Servant
 import Network.Wai
 import Network.Wai.Middleware.Gzip
+import Network.Wai.Middleware.HttpAuth
 import Network.Wai.Handler.Warp
 import Servant
 import Servant.API
 import Servant.HTML.Lucid
+import System.Environment
 
 htmlTemplate :: Text -> Html ()
 htmlTemplate t = do
@@ -34,9 +37,19 @@ server :: Server Api
 server = pure (htmlTemplate "Klara Works")
 
 app :: Application
-app = gzip def { gzipFiles = GzipCompress  } $ serve (Proxy @ Api) server
+app = gzip def { gzipFiles = GzipCompress } $ serve (Proxy @ Api) server
 
 main :: IO ()
 main = do
     let settings = setPort 8080 defaultSettings
-    runSettings settings app
+    user' <- fmap BSC.pack <$> lookupEnv "SERVER_USER"
+    password' <- fmap BSC.pack <$> lookupEnv "SERVER_PASSWORD"
+    case (user', password') of
+        (Just u, Just p) -> do
+            putStrLn "Start server as private"
+            runSettings settings $ basicAuth (\u' p' -> pure $ u' == u && p' == p) "Locked" app
+
+        _ -> do
+            putStrLn "Start server as public"
+            runSettings settings app
+
