@@ -49,9 +49,9 @@ main = do
         (Just u, Just p) -> do
             putStrLn "Start server as private"
             let auth = basicAuth (\u' p' -> pure $ u' == u && p' == p) "Locked"
-                health app req respond = case lookup (mk "X-HEALTH-CHECK") (requestHeaders req) of
-                    Just _ -> respond $ responseLBS status200 [] ""
-                    Nothing -> app req respond
+                health app req respond = case pathInfo req of
+                    ["health"] -> respond $ responseLBS status200 [] ""
+                    _ -> app req respond
             runSettings settings . health $ auth app
 
         _ -> do
