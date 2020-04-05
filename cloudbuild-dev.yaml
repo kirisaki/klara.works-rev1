@@ -4,7 +4,7 @@ steps:
   id: Restore cache
   args:
   - cp
-  - gs://prototip-2-cache/cabal.tar.gz
+  - gs://${_NAME}-cache/cabal.tar.gz
   - /workspace/cabal.tar.gz
 
 - name: 'haskell:8.8.2'
@@ -24,7 +24,7 @@ steps:
   args:
   - cp
   - /workspace/cabal.tar.gz
-  - gs://prototip-2-cache/cabal.tar.gz
+  - gs://${_NAME}-2-cache/cabal.tar.gz
 
 - name: gcr.io/cloud-builders/docker
   id: Build docker image
