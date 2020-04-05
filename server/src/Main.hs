@@ -52,7 +52,7 @@ main = do
                 health app req respond = case lookup (mk "X-HEALTH-CHECK") (requestHeaders req) of
                     Just _ -> respond $ responseLBS status200 [] ""
                     Nothing -> app req respond
-            runSettings settings app
+            runSettings settings $ health app
 
         _ -> do
             putStrLn "Start server as public"
