@@ -24,7 +24,7 @@ htmlTemplate t = do
     html_ $ do
         head_ $ do
             meta_ [charset_ "utf-8"]
-            title_ [] (pure t)
+            title_ [] (toHtml t)
         body_ $ do
             div_ [id_ "app"] "Klara Works"
 
