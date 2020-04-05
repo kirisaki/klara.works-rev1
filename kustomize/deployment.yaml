@@ -17,3 +17,15 @@ spec:
           image: klaraworks-dev-image
           ports:
             - containerPort: 8080
+          env:
+          - name: SERVER_USER
+            valueFrom:
+              secretKeyRef:
+                name: klaraworks
+                key: user
+          - name: SERVER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: klaraworks
+                key: password
+
