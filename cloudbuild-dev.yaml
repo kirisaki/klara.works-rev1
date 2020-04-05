@@ -53,7 +53,7 @@ steps:
   - edit
   - set
   - namesuffix
-  - dev
+  - '-dev'
   env:
   - CLOUDSDK_COMPUTE_ZONE=$_ZONE
   - CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER
