@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: klaraworks-container
-          image: klaraworks-image
+          image: klaraworks-dev-image
           ports:
             - containerPort: 8080
