@@ -12,6 +12,7 @@ import Data.Proxy
 import Data.Text
 import Lucid
 import Lucid.Servant
+import Network.HTTP.Types.Status
 import Network.Wai
 import Network.Wai.Middleware.Gzip
 import Network.Wai.Middleware.HttpAuth
@@ -47,7 +48,11 @@ main = do
     case (user', password') of
         (Just u, Just p) -> do
             putStrLn "Start server as private"
-            runSettings settings $ basicAuth (\u' p' -> pure $ u' == u && p' == p) "Locked" app
+            let auth = basicAuth (\u' p' -> pure $ u' == u && p' == p) "Locked"
+                health app req respond = case lookup (mk "X-HEALTH-CHECK") (requestHeaders req) of
+                    Just _ -> respond $ responseLBS status200 [] ""
+                    Nothing -> app req respond
+            runSettings settings . auth $ health app
 
         _ -> do
             putStrLn "Start server as public"
