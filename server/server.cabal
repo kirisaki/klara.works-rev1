@@ -13,7 +13,7 @@ source-repository head
   type: git
   location: https://github.com/kirisaki/prototip-2.kirisaki.dev
 
-executable server-exe
+executable server
   main-is: Main.hs
   other-modules:
       Paths_server
