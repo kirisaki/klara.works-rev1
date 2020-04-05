@@ -24,7 +24,7 @@ steps:
   args:
   - cp
   - /workspace/cabal.tar.gz
-  - gs://${_NAME}-2-cache/cabal.tar.gz
+  - gs://${_NAME}-cache/cabal.tar.gz
 
 - name: gcr.io/cloud-builders/docker
   id: Build docker image
