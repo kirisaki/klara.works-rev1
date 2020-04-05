@@ -31,14 +31,14 @@ steps:
   args:
   - 'build'
   - '-t'
-  - 'gcr.io/$PROJECT_ID/$_NAME:$TAG_NAME'
+  - 'gcr.io/$PROJECT_ID/$_NAME:$SHORT_SHA'
   - '.'
 
 - name: gcr.io/cloud-builders/docker
   id: Push docker image
   args:
   - 'push'
-  - 'gcr.io/$PROJECT_ID/$_NAME:$TAG_NAME'
+  - 'gcr.io/$PROJECT_ID/$_NAME:$SHORT_SHA'
 
 timeout: 2400s
 
