@@ -67,7 +67,7 @@ steps:
   - edit
   - set
   - image
-  - '$PROJECT_ID-image=gcr.io/$PROJECT_ID/prototip-2:$TAG_NAME'
+  - '$_NAME-image=gcr.io/$PROJECT_ID/$_NAME:$SHORT_SHA'
   env:
   - CLOUDSDK_COMPUTE_ZONE=$_ZONE
   - CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER
