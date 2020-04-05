@@ -28,4 +28,10 @@ spec:
               secretKeyRef:
                 name: klaraworks
                 key: password
-
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+              httpHeaders:
+              - name: X-HEALTH-CHECK
+                value: Are you still alive?
