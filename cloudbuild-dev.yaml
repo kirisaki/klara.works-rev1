@@ -47,14 +47,14 @@ steps:
   args:
   - install
 
-- name: gcr.io/cloud-builders/yarn
+- name: node:13.7.0
   id: Build client
   dir: client
   entrypoint: yarn
   args:
   - webpack
 
-- name: node:13.7.0
+- name: gcr.io/cloud-builders/gsutil
   id: Store node_modules
   dir: client
   entrypoint: /bin/sh
