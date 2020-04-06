@@ -43,12 +43,14 @@ steps:
 - name: node:13.7.0
   id: Install client modules
   dir: client
+  entrypoint: yarn
   args:
   - install
 
 - name: gcr.io/cloud-builders/yarn
   id: Build client
   dir: client
+  entrypoint: yarn
   args:
   - webpack
 
