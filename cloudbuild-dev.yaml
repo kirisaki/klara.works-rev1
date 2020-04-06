@@ -29,6 +29,40 @@ steps:
   - gs://${_NAME}-cache/cabal.tar.gz
 
 
+# build & test client
+- name: gcr.io/cloud-builders/gsutil
+  id: Restore node_modules
+  dir: client
+  entrypoint: /bin/sh
+  args:
+  - -c
+  - |
+      gsutil cp gs://${_NAME}-cache/node_modules.tar.gz node_modules.tar.gz && \
+      tar xzf node_modules.tar.gz
+
+- name: gcr.io/cloud-builders/yarn
+  id: Install client modules
+  dir: client
+  args:
+  - install
+
+- name: gcr.io/cloud-builders/yarn
+  id: Build client
+  dir: client
+  args:
+  - webpack
+
+- name: gcr.io/cloud-builders/gsutil
+  id: Store node_modules
+  dir: client
+  entrypoint: /bin/sh
+  args:
+  - -c
+  - |
+      tar czf node_modules.tar.gz node_modules/ && \
+      gsutil cp node_modules.tar.gz gs://${_NAME}-cache/node_modules.tar.gz
+
+
 # build & push docker image
 - name: gcr.io/cloud-builders/docker
   id: Build docker image
