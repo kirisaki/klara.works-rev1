@@ -1,0 +1,28 @@
+{
+  "name": "client",
+  "version": "0.0.1",
+  "description": "Klara Works",
+  "main": "index.js",
+  "repository": "https://github.com/kirisaki/klara.works",
+  "author": "Akihito KIRISAKI",
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "@types/react": "^16.9.32",
+    "@types/react-dom": "^16.9.6",
+    "@types/react-router-dom": "^5.1.3",
+    "css-loader": "^3.4.2",
+    "file-loader": "^6.0.0",
+    "html-webpack-plugin": "^4.0.4",
+    "style-loader": "^1.1.3",
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2"
+  }
+}

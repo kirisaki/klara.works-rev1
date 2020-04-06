@@ -31,11 +31,14 @@ htmlTemplate t = do
             title_ [] (toHtml t)
         body_ $ do
             div_ [id_ "app"] "Klara Works"
+            script_ [src_ "/assets/main.js"] empty
 
 type Api = Get '[HTML] (Html ())
+        :<|> "assets" :> Raw
 
 server :: Server Api
 server = pure (htmlTemplate "Klara Works")
+        :<|> serveDirectoryWebApp "/assets"
 
 app :: Application
 app = gzip def { gzipFiles = GzipCompress } $ serve (Proxy @ Api) server
