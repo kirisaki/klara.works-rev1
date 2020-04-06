@@ -1,8 +1,8 @@
 FROM ubuntu:18.04
 
-#RUN mkdir /js
+RUN mkdir /assets
 
-#COPY ./client/dist/ /js/
+COPY ./client/dist/ /assets
 
 COPY ./server/dist/server /sbin/
 

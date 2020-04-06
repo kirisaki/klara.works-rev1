@@ -28,14 +28,20 @@ htmlTemplate t = do
     html_ $ do
         head_ $ do
             meta_ [charset_ "utf-8"]
+            link_ [href_ "https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400&display=swap", rel_ "stylesheet"]
+            link_ [href_ "https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap", rel_ "stylesheet"]
+            link_ [href_ "/assets/favicon.ico", rel_ "icon"]
             title_ [] (toHtml t)
         body_ $ do
             div_ [id_ "app"] "Klara Works"
+            script_ [src_ "/assets/main.js"] empty
 
 type Api = Get '[HTML] (Html ())
+        :<|> "assets" :> Raw
 
 server :: Server Api
 server = pure (htmlTemplate "Klara Works")
+        :<|> serveDirectoryWebApp "/assets"
 
 app :: Application
 app = gzip def { gzipFiles = GzipCompress } $ serve (Proxy @ Api) server
