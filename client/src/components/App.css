@@ -1,0 +1,28 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container > article {
+    padding-left: 0.7rem;
+    border-color: var(--pink);
+    border-style: solid;
+    border-width: 0 0 0 5px;
+}
+
+.container > article > h1 {
+    width: 15rem;
+    height: 3rem;
+    background: transparent url('/assets/klaraworks.svg') no-repeat
+}
+
+.container > article > h1 > span {
+    display: none;
+}
+
+.container td {
+    padding: 0.2rem;
+}
