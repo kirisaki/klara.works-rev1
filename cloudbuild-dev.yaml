@@ -40,7 +40,7 @@ steps:
       gsutil cp gs://${_NAME}-cache/node_modules.tar.gz node_modules.tar.gz && \
       tar xzf node_modules.tar.gz
 
-- name: gcr.io/cloud-builders/yarn
+- name: node:13.7.0
   id: Install client modules
   dir: client
   args:
@@ -52,7 +52,7 @@ steps:
   args:
   - webpack
 
-- name: gcr.io/cloud-builders/gsutil
+- name: node:13.7.0
   id: Store node_modules
   dir: client
   entrypoint: /bin/sh
