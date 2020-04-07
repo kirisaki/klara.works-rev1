@@ -7,24 +7,22 @@
   value: klaraworks-dev
 
 - op: add
-  path: /spec/template/spec/containers/0
+  path: /spec/template/spec/containers/0/env
   value:
-    env:
-    - name: SERVER_USER
-      valueFrom:
-        secretKeyRef:
-          name: klaraworks
-          key: user
-    - name: SERVER_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: klaraworks
-          key: password
+  - name: SERVER_USER
+    valueFrom:
+      secretKeyRef:
+        name: klaraworks
+        key: user
+  - name: SERVER_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: klaraworks
+        key: password
 
 - op: add
-  path: /spec/template/spec/containers/0
+  path: /spec/template/spec/containers/0/redinessProbe
   value:
-    redinessProbe:
-      httpGet:
-        path: /health
-        port: 8080
+    httpGet:
+      path: /health
+      port: 8080
