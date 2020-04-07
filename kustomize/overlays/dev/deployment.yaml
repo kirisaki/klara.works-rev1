@@ -21,7 +21,7 @@
         key: password
 
 - op: add
-  path: /spec/template/spec/containers/0/redinessProbe
+  path: /spec/template/spec/containers/0/readinessProbe
   value:
     httpGet:
       path: /health
