@@ -4,4 +4,4 @@ metadata:
   name: klaraworks-cert
 spec:
   domains:
-    - prototip.klaraworks.dev
+    - example.net

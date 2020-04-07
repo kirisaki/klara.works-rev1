@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: klaraworks-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: static-ip
+    networking.gke.io/managed-certificates: cert
+spec:
+  rules:
+    - host: example.net
+      http:
+        paths:
+        - path: /*
+          backend:
+            serviceName: service
+            servicePort: 8080

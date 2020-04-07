@@ -1,0 +1,3 @@
+- op: replace
+  path: /spec/domains/0
+  value: prototip.klaraworks.dev

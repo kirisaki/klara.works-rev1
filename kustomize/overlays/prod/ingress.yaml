@@ -1,0 +1,15 @@
+- op: replace
+  path: /metadata/annotations/kubernetes.io~1ingress.global-static-ip-name
+  value: klaraworks-prod
+
+- op: replace
+  path: /metadata/annotations/networking.gke.io~1managed-certificates
+  value: klaraworks-cert-prod
+
+- op: replace
+  path: /spec/rules/0/host
+  value: klara.works
+
+- op: replace
+  path: /spec/rules/0/http/paths/0/backend/serviceName
+  value: klaraworks-service-prod

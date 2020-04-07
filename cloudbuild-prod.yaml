@@ -71,39 +71,17 @@ steps:
   args:
   - 'build'
   - '-t'
-  - 'gcr.io/$PROJECT_ID/$_NAME:$SHORT_SHA'
+  - 'gcr.io/$PROJECT_ID/$_NAME:$_IMAGE_TAG'
   - '.'
 
 - name: gcr.io/cloud-builders/docker
   id: Push docker image
   args:
   - 'push'
-  - 'gcr.io/$PROJECT_ID/$_NAME:$SHORT_SHA'
+  - 'gcr.io/$PROJECT_ID/$_NAME:$_IMAGE_TAG'
 
 
 # deploy
-- name: gcr.io/$PROJECT_ID/kustomize
-  id: Inject user
-  dir: kustomize
-  args:
-  - edit
-  - add
-  - secret
-  - klaraworks
-  - --from-literal
-  - user=$_WEB_USER
-
-- name: gcr.io/$PROJECT_ID/kustomize
-  id: Inject password
-  dir: kustomize
-  args:
-  - edit
-  - add
-  - secret
-  - klaraworks
-  - --from-literal
-  - password=$_WEB_PASSWORD
-
 - name: gcr.io/$PROJECT_ID/kustomize
   id: Inject image name
   dir: kustomize
@@ -111,13 +89,13 @@ steps:
   - edit
   - set
   - image
-  - '$_NAME=gcr.io/$PROJECT_ID/$_NAME:$SHORT_SHA'
+  - '$_NAME=gcr.io/$PROJECT_ID/$_NAME:$_IMAGE_TAG'
 
 - name: gcr.io/$PROJECT_ID/kustomize
   id: Deploy
   args:
   - build
-  - kustomize/overlays/dev
+  - kustomize/overlays/prod
   env:
   - APPLY=true
 

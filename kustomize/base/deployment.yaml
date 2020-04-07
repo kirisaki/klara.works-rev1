@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: klaraworks-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: klaraworks-app
+  template:
+    metadata:
+      labels:
+        app: klaraworks-app
+    spec:
+      containers:
+        - name: klaraworks-container
+          image: klaraworks-image
+          ports:
+            - containerPort: 8080

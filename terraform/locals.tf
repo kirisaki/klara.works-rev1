@@ -9,30 +9,37 @@ locals {
 
     credential = file({
         dev = "klaraworks-deploy-dev.json"
+        prod = "klaraworks-deploy-prod.json"
     }[local.k])
 }
 
 locals {
     branch = {
         dev = "develop"
+        prod = "master"
     }[local.k]
+    docker_tag = "0.0.1"
 }
 
 locals {
     normal_nodes = {
         dev = 1
+        prod= 1
     }[local.k]
 
     normal_node_type = {
         dev = "e2-micro"
+        prod = "e2-micro"
     }[local.k]
 
     preemptible_nodes = {
         dev = 1
+        prod = 2
     }[local.k]
 
     preemptible_node_type = {
         dev = "e2-micro"
+        prod = "e2-micro"
     }[local.k]
 
     scopes = [
