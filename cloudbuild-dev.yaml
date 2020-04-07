@@ -84,7 +84,7 @@ steps:
 # deploy
 - name: gcr.io/$PROJECT_ID/kustomize
   id: Inject user
-  dir: kustomize
+  dir: kustomize/overlays/dev
   args:
   - edit
   - add
@@ -95,7 +95,7 @@ steps:
 
 - name: gcr.io/$PROJECT_ID/kustomize
   id: Inject password
-  dir: kustomize
+  dir: kustomize/overlays/dev
   args:
   - edit
   - add
