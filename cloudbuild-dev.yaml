@@ -1,0 +1,131 @@
+steps:
+
+
+# build & test server
+- name: gcr.io/cloud-builders/gsutil
+  id: Restore .cabal
+  args:
+  - cp
+  - gs://${_NAME}-cache/cabal.tar.gz
+  - /workspace/cabal.tar.gz
+
+- name: 'haskell:8.8.2'
+  id: Test & Build server
+  entrypoint: /bin/sh
+  args:
+  - -c
+  - |
+      tar xzf cabal.tar.gz -C /builder/home/ &&\
+      cd server && cabal update && cabal build &&\
+      cabal test &&\
+      cabal install --install-method=copy --installdir=dist &&\
+      cd /builder/home && tar czf /workspace/cabal.tar.gz .cabal/
+
+- name: gcr.io/cloud-builders/gsutil
+  id: Store .cabal
+  args:
+  - cp
+  - /workspace/cabal.tar.gz
+  - gs://${_NAME}-cache/cabal.tar.gz
+
+
+# build & test client
+- name: gcr.io/cloud-builders/gsutil
+  id: Restore node_modules
+  dir: client
+  entrypoint: /bin/sh
+  args:
+  - -c
+  - |
+      gsutil cp gs://${_NAME}-cache/node_modules.tar.gz node_modules.tar.gz && \
+      tar xzf node_modules.tar.gz
+
+- name: node:13.7.0
+  id: Install client modules
+  dir: client
+  entrypoint: yarn
+  args:
+  - install
+
+- name: node:13.7.0
+  id: Build client
+  dir: client
+  entrypoint: yarn
+  args:
+  - webpack
+
+- name: gcr.io/cloud-builders/gsutil
+  id: Store node_modules
+  dir: client
+  entrypoint: /bin/sh
+  args:
+  - -c
+  - |
+      tar czf node_modules.tar.gz node_modules/ && \
+      gsutil cp node_modules.tar.gz gs://${_NAME}-cache/node_modules.tar.gz
+
+
+# build & push docker image
+- name: gcr.io/cloud-builders/docker
+  id: Build docker image
+  args:
+  - 'build'
+  - '-t'
+  - 'gcr.io/$PROJECT_ID/$_NAME:$SHORT_SHA'
+  - '.'
+
+- name: gcr.io/cloud-builders/docker
+  id: Push docker image
+  args:
+  - 'push'
+  - 'gcr.io/$PROJECT_ID/$_NAME:$SHORT_SHA'
+
+
+# deploy
+- name: gcr.io/$PROJECT_ID/kustomize
+  id: Inject user
+  dir: kustomize/overlays/dev
+  args:
+  - edit
+  - add
+  - secret
+  - klaraworks
+  - --from-literal
+  - user=$_WEB_USER
+
+- name: gcr.io/$PROJECT_ID/kustomize
+  id: Inject password
+  dir: kustomize/overlays/dev
+  args:
+  - edit
+  - add
+  - secret
+  - klaraworks
+  - --from-literal
+  - password=$_WEB_PASSWORD
+
+- name: gcr.io/$PROJECT_ID/kustomize
+  id: Inject image name
+  dir: kustomize/overlays/dev
+  args:
+  - edit
+  - set
+  - image
+  - '$_NAME=gcr.io/$PROJECT_ID/$_NAME:$SHORT_SHA'
+
+- name: gcr.io/$PROJECT_ID/kustomize
+  id: Deploy
+  args:
+  - build
+  - kustomize/overlays/dev
+  env:
+  - APPLY=true
+
+options:
+  env:
+  - CLOUDSDK_COMPUTE_ZONE=$_ZONE
+  - CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER
+  - GCLOUD_PROJECT=$_NAME
+
+timeout: 2400s
+

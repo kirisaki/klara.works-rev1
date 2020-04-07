@@ -1,0 +1,28 @@
+- op: replace
+  path: /spec/replicas
+  value: 2
+
+- op: replace
+  path: /spec/template/spec/containers/0/image
+  value: klaraworks-dev
+
+- op: add
+  path: /spec/template/spec/containers/0/env
+  value:
+  - name: SERVER_USER
+    valueFrom:
+      secretKeyRef:
+        name: klaraworks
+        key: user
+  - name: SERVER_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: klaraworks
+        key: password
+
+- op: add
+  path: /spec/template/spec/containers/0/readinessProbe
+  value:
+    httpGet:
+      path: /health
+      port: 8080

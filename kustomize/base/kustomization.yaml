@@ -1,0 +1,8 @@
+commonLabels:
+  app: klaraworks
+
+resources:
+- deployment.yaml
+- cert.yaml
+- ingress.yaml
+- service.yaml
