@@ -1,0 +1,66 @@
+steps:
+
+
+# test server
+- name: gcr.io/cloud-builders/gsutil
+  id: Restore .cabal
+  args:
+  - cp
+  - gs://${_NAME}-cache/cabal.tar.gz
+  - /workspace/cabal.tar.gz
+
+- name: 'haskell:8.8.2'
+  id: Test & Build server
+  entrypoint: /bin/sh
+  args:
+  - -c
+  - |
+      tar xzf cabal.tar.gz -C /builder/home/ &&\
+      cd server && cabal update && cabal build &&\
+      cabal test &&\
+      cd /builder/home && tar czf /workspace/cabal.tar.gz .cabal/
+
+- name: gcr.io/cloud-builders/gsutil
+  id: Store .cabal
+  args:
+  - cp
+  - /workspace/cabal.tar.gz
+  - gs://${_NAME}-cache/cabal.tar.gz
+
+
+# test client
+- name: gcr.io/cloud-builders/gsutil
+  id: Restore node_modules
+  dir: client
+  entrypoint: /bin/sh
+  args:
+  - -c
+  - |
+      gsutil cp gs://${_NAME}-cache/node_modules.tar.gz node_modules.tar.gz && \
+      tar xzf node_modules.tar.gz
+
+- name: node:13.7.0
+  id: Install client modules
+  dir: client
+  entrypoint: yarn
+  args:
+  - install
+
+- name: node:13.7.0
+  id: Test client
+  dir: client
+  entrypoint: yarn
+  args:
+  - test
+
+- name: gcr.io/cloud-builders/gsutil
+  id: Store node_modules
+  dir: client
+  entrypoint: /bin/sh
+  args:
+  - -c
+  - |
+      tar czf node_modules.tar.gz node_modules/ && \
+      gsutil cp node_modules.tar.gz gs://${_NAME}-cache/node_modules.tar.gz
+
+timeout: 2400s
