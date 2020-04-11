@@ -1,7 +1,8 @@
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+import path from 'path'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import * as webpack from 'webpack'
 
-module.exports = {
+const config: webpack.Configuration = {
   output: {
     path: path.join(__dirname, '/dist'),
     publicPath: '/assets/',
@@ -37,3 +38,4 @@ module.exports = {
     })
   ]
 }
+export default config
