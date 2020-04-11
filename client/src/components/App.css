@@ -23,6 +23,16 @@
     display: none;
 }
 
+.container p {
+    padding: 0.2rem 0;
+}
+
 .container td {
     padding: 0.2rem;
+}
+
+@media screen and (max-width: 480px) {
+    .container td {
+        padding: 0.4rem;
+    }
 }
