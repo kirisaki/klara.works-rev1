@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE ExtendedDefaultRules #-}
 {-# LANGUAGE OverloadedLabels #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeApplications #-}
@@ -28,12 +29,14 @@ htmlTemplate t = do
     html_ $ do
         head_ $ do
             meta_ [charset_ "utf-8"]
+            meta_ [name_ "viewport", content_ "width=device-width, initial-scale=1.0"]
             link_ [href_ "https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400&display=swap", rel_ "stylesheet"]
             link_ [href_ "https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap", rel_ "stylesheet"]
             link_ [href_ "/assets/favicon.ico", rel_ "icon"]
+            style_ [type_ "text/css"] "background: #444 url('/assets/back.svg');"
             title_ [] (toHtml t)
         body_ $ do
-            div_ [id_ "app"] "Klara Works"
+            div_ [id_ "app"] mempty
             script_ [src_ "/assets/main.js"] empty
 
 type Api = Get '[HTML] (Html ())

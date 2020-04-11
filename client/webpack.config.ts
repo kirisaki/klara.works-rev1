@@ -1,13 +1,17 @@
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+import path from 'path'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import * as webpack from 'webpack'
 
-module.exports = {
+const config: webpack.Configuration = {
   output: {
     path: path.join(__dirname, '/dist'),
     publicPath: '/assets/',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx']
+  },
+  devServer:{
+    host: '0.0.0.0',
   },
   module: {
     rules: [
@@ -37,3 +41,4 @@ module.exports = {
     })
   ]
 }
+export default config
