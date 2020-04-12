@@ -18,7 +18,7 @@ body {
     font-family: 'Josefin Sans','M PLUS 1p', sans-serif;
 }
 
-body, h1 , div, p {
+body, h1 , div, p, ul {
     margin: 0;
     padding: 0;
     box-sizing: border-box;

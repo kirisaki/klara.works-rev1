@@ -1,5 +1,4 @@
 import React, {} from 'react'
-import {} from 'react'
 import style from './Home.css'
 
 export const Home: React.FC = () => {
