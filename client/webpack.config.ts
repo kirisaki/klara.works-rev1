@@ -12,7 +12,7 @@ import WebpackDevServer from 'webpack-dev-server'
 
 const output = (args: CliConfigOptions): Output => ({
   path: path.join(__dirname, 'dist'),
-  publicPath: args.mode == 'production' ? '/assets/' : '/',
+  publicPath: args.mode === 'production' ? '/assets/' : '/',
 })
 
 const resolve: Resolve = {
@@ -21,6 +21,7 @@ const resolve: Resolve = {
 
 const devServer: WebpackDevServer.Configuration = {
   host: '0.0.0.0',
+  historyApiFallback: true,
 }
 
 
@@ -37,28 +38,28 @@ const cssRule: Rule = {
   use: ['style-loader', 'css-loader?modules'],
 }
 
-const fileRule: Rule = {
+const fileRule = (args: CliConfigOptions): Rule => ({
   test: /\.(png|jpg|svg|ico)$/,
   loader: 'file-loader',
   options: {
-    name: '[name].[ext]'
+    name: args.mode === 'production' ? '[name].[ext]' : 'assets/[name].[ext]'
   },
-}
+})
 
-const module: Module = {
+const modules = (args: CliConfigOptions): Module => ({
   rules: [
     tsxRule,
     cssRule,
-    fileRule,
+    fileRule(args),
   ]
-}
+})
 
 const config: ConfigurationFactory = (_, args) => {
   return ({
     output: output(args),
     resolve,
     devServer,
-    module,
+    module: modules(args),
     plugins: [
       new HtmlWebpackPlugin({
         template: "./src/index.html"

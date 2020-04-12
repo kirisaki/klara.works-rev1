@@ -1,9 +1,5 @@
 import React, {} from 'react'
 import {
-  TransitionGroup,
-  CSSTransition
-} from 'react-transition-group'
-import {
   useLocation,
   Switch,
   Route,
@@ -20,19 +16,14 @@ export const App: React.FC = () => {
   return (
     <>
       <div className={style.container}>
-        <TransitionGroup>
-          {}
-          <CSSTransition key={location.key} classNames="fade" timeout={300}>
-            <Switch location={location}>
-              <Route path="/" exact>
-                <Home />
-              </Route>
-              <Route path="/about">
-                <About />
-              </Route>
-            </Switch>
-          </CSSTransition>
-        </TransitionGroup>
+        <Switch location={location}>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+        </Switch>
       </div>
       <Nav />
     </>

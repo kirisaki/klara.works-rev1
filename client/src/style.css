@@ -18,6 +18,10 @@ body {
     font-family: 'Josefin Sans','M PLUS 1p', sans-serif;
 }
 
+h1 {
+    font-weight: 400;
+}
+
 body, h1 , div, p, ul {
     margin: 0;
     padding: 0;
