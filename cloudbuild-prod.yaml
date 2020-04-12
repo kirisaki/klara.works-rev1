@@ -53,6 +53,8 @@ steps:
   entrypoint: yarn
   args:
   - webpack
+  - --mode
+  - production
 
 - name: gcr.io/cloud-builders/gsutil
   id: Store node_modules
