@@ -22,7 +22,7 @@ h1 {
     font-weight: 400;
 }
 
-body, h1 , div, p, ul {
+body, h1 , div, p, ul{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -33,7 +33,9 @@ a {
     transition: var(--ease);
 }
 
-a:hover {
-    color: var(--dark);
-    background-color: var(--white);
+@media screen and (min-width: 480px){
+    a:hover {
+        color: var(--dark);
+        background-color: var(--white);
+    }
 }
