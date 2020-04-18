@@ -1,8 +1,10 @@
 import React, {} from 'react'
 
 import style from './About.css'
+import { usePage } from '../hooks/page'
 
 export const About: React.FC = () => {
+  usePage('About')
   return (
     <article className={style.about}>
       <section>

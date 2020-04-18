@@ -1,7 +1,11 @@
 import React, {} from 'react'
+
+import { usePage } from '../hooks/page'
+
 import style from './Home.css'
 
 export const Home: React.FC = () => {
+  usePage()
   return (
     <article className={style.home}>
       <h1>
