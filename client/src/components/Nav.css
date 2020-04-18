@@ -1,7 +1,7 @@
 .nav {
     width: 50%;
     position: fixed;
-    top: 0;
+    bottom: calc(100vh - 3rem);
     right: 0;
     z-index: 100;
 }
@@ -10,7 +10,7 @@
     .nav {
         width: 100%;
         position: fixed;
-        top: calc(100vh - 3rem);
+        bottom: 0;
     }
 }
 

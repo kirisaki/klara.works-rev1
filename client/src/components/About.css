@@ -1,0 +1,47 @@
+.about {
+    width: 50%;
+    margin-left: 50%;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width: 480px){
+    .about {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+.about > section {
+    width: 100%;
+    padding: 1rem;
+    margin: 1rem;
+    border: 1px var(--white) solid;
+}
+
+@media screen and (max-width: 480px){
+    .about > section {
+        width: 100%;
+    }
+}
+
+.about > section > h1 {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    border: solid var(--white);
+    border-width: 0 0 1px 0;
+}
+
+.about > section > p > img {
+    padding: 10px;
+    width: 3rem;
+    height: 3rem;
+    vertical-align: middle;
+}
+
+.about > section > p > img.react {
+    width: calc(3rem + 20px);
+    height: calc(3rem + 20px);
+    padding: 0;
+}

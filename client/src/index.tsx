@@ -8,6 +8,10 @@ import './klaraworks.svg'
 import './back.svg'
 import './favicon.ico'
 
+import './about-react.svg'
+import './about-haskell.svg'
+import './about-k8s.svg'
+
 ReactDOM.render(
     <BrowserRouter>
       <App/>

@@ -16,6 +16,13 @@ body {
     color: var(--white);
     font-size: 11.5pt;
     font-family: 'Josefin Sans','M PLUS 1p', sans-serif;
+    letter-spacing: -0.4pt;
+}
+
+@media screen and (max-width: 480px){
+    body {
+        font-size: 10pt;
+    }
 }
 
 h1 {
