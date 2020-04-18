@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
     "target": "es2018",
-    "module": "esNext",
+    "module": "commonjs",
     "strict": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
     "moduleResolution": "node",
     "noEmit": true,
     "esModuleInterop": true,
-    "jsx": "react"
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true
   }
 }

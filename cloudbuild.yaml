@@ -1,7 +1,7 @@
 steps:
 
 
-# build & test server
+# test server
 - name: gcr.io/cloud-builders/gsutil
   id: Restore .cabal
   args:
@@ -18,7 +18,6 @@ steps:
       tar xzf cabal.tar.gz -C /builder/home/ &&\
       cd server && cabal update && cabal build &&\
       cabal test &&\
-      cabal install --install-method=copy --installdir=dist &&\
       cd /builder/home && tar czf /workspace/cabal.tar.gz .cabal/
 
 - name: gcr.io/cloud-builders/gsutil
@@ -29,7 +28,7 @@ steps:
   - gs://${_NAME}-cache/cabal.tar.gz
 
 
-# build & test client
+# test client
 - name: gcr.io/cloud-builders/gsutil
   id: Restore node_modules
   dir: client
@@ -48,13 +47,11 @@ steps:
   - install
 
 - name: node:13.7.0
-  id: Build client
+  id: Test client
   dir: client
   entrypoint: yarn
   args:
-  - webpack
-  - --mode
-  - production
+  - test
 
 - name: gcr.io/cloud-builders/gsutil
   id: Store node_modules
@@ -66,46 +63,4 @@ steps:
       tar czf node_modules.tar.gz node_modules/ && \
       gsutil cp node_modules.tar.gz gs://${_NAME}-cache/node_modules.tar.gz
 
-
-# build & push docker image
-- name: gcr.io/cloud-builders/docker
-  id: Build docker image
-  args:
-  - 'build'
-  - '-t'
-  - 'gcr.io/$PROJECT_ID/$_NAME:$_IMAGE_TAG'
-  - '.'
-
-- name: gcr.io/cloud-builders/docker
-  id: Push docker image
-  args:
-  - 'push'
-  - 'gcr.io/$PROJECT_ID/$_NAME:$_IMAGE_TAG'
-
-
-# deploy
-- name: gcr.io/$PROJECT_ID/kustomize
-  id: Inject image name
-  dir: kustomize/overlays/prod
-  args:
-  - edit
-  - set
-  - image
-  - '$_NAME=gcr.io/$PROJECT_ID/$_NAME:$_IMAGE_TAG'
-
-- name: gcr.io/$PROJECT_ID/kustomize
-  id: Deploy
-  args:
-  - build
-  - kustomize/overlays/prod
-  env:
-  - APPLY=true
-
-options:
-  env:
-  - CLOUDSDK_COMPUTE_ZONE=$_ZONE
-  - CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER
-  - GCLOUD_PROJECT=$_NAME
-
 timeout: 2400s
-

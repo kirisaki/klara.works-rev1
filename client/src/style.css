@@ -16,9 +16,20 @@ body {
     color: var(--white);
     font-size: 11.5pt;
     font-family: 'Josefin Sans','M PLUS 1p', sans-serif;
+    letter-spacing: -0.4pt;
 }
 
-body, h1 , div {
+@media screen and (max-width: 480px){
+    body {
+        font-size: 10pt;
+    }
+}
+
+h1 {
+    font-weight: 400;
+}
+
+body, h1 , div, p, ul{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -29,7 +40,9 @@ a {
     transition: var(--ease);
 }
 
-a:hover {
-    color: var(--dark);
-    background-color: var(--white);
+@media screen and (min-width: 480px){
+    a:hover {
+        color: var(--dark);
+        background-color: var(--white);
+    }
 }
