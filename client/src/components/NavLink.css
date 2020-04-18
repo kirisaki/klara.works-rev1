@@ -1,0 +1,12 @@
+.link{
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    line-height: 3rem;
+    text-align: center;
+    text-decoration: none;
+}
+
+.active{
+    background: linear-gradient(transparent 93%, var(--pink) 7%);
+}

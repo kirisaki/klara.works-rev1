@@ -1,6 +1,6 @@
 import React, {} from 'react'
-import { Link } from 'react-router-dom'
 
+import NavLink from './NavLink'
 import style from './Nav.css'
 
 
@@ -9,10 +9,10 @@ const Nav: React.FC = () => {
     <nav className={style.nav}>
       <ul>
         <li>
-          <Link to="/">home</Link>
+          <NavLink to="/" exact>home</NavLink>
         </li>
         <li>
-          <Link to="/about">about</Link>
+          <NavLink to="/about">about</NavLink>
         </li>
       </ul>
     </nav>
