@@ -36,7 +36,7 @@ library
     , servant-server
     , servant-lucid
     , text
-    , unordered-containers
+    , containers
     , wai
     , wai-extra
     , warp
@@ -63,7 +63,7 @@ executable server
     , servant-server
     , servant-lucid
     , text
-    , unordered-containers
+    , containers
     , wai
     , wai-extra
     , warp
@@ -90,7 +90,7 @@ test-suite server-test
     , servant-server
     , servant-lucid
     , text
-    , unordered-containers
+    , containers
     , wai
     , wai-extra
     , warp
