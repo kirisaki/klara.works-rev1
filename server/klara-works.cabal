@@ -73,7 +73,7 @@ test-suite server-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      Paths_server
+      Paths_klara_works
   hs-source-dirs:
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N

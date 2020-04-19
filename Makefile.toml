@@ -1,0 +1,21 @@
+[tasks.client]
+script = [
+    "cd client",
+    "yarn webpack --mode=production"
+]
+
+[tasks.server]
+script = [
+    "cd server",
+    "cabal install --install-method=copy --installdir=dist --overwrite-policy=always"
+]
+
+[tasks.build]
+command = "docker"
+args = ["build", "-t", "klaraworks:0.0.1", "."]
+dependencies = ["client", "server"]
+
+[tasks.run]
+command = "docker"
+args = ["run", "-p", "8000:8080", "klaraworks:0.0.1"]
+dependencies = ["build"]
