@@ -17,11 +17,13 @@ import Servant.HTML.Lucid
 import KlaraWorks.Html
 
 type Api = "about" :> Get '[HTML] (Html ())
+        :<|> "works" :> Get '[HTML] (Html ())
         :<|> Get '[HTML] (Html ())
         :<|> "assets" :> Raw
 
 server :: Server Api
 server =  pure (htmlTemplate "Klara Works - About")
+        :<|> pure (htmlTemplate "Klara Works - Works")
         :<|> pure (htmlTemplate "Klara Works")
         :<|> serveDirectoryWebApp "/assets"
 

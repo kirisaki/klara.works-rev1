@@ -18,21 +18,25 @@ library
   exposed-modules:
       KlaraWorks
       KlaraWorks.Html
+      KlaraWorks.Works
   other-modules:
       Paths_klara_works
   hs-source-dirs:
       src
   build-depends:
       base >=4.7 && <5
+    , aeson
     , bytestring
     , case-insensitive
     , extensible
     , http-types
+    , lens
     , lucid
     , servant
     , servant-server
     , servant-lucid
     , text
+    , unordered-containers
     , wai
     , wai-extra
     , warp
@@ -47,16 +51,19 @@ executable server
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , aeson
     , klara-works
     , bytestring
     , case-insensitive
     , extensible
     , http-types
+    , lens
     , lucid
     , servant
     , servant-server
     , servant-lucid
     , text
+    , unordered-containers
     , wai
     , wai-extra
     , warp
@@ -72,15 +79,18 @@ test-suite server-test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , aeson
     , bytestring
     , extensible
     , case-insensitive
     , http-types
+    , lens
     , lucid
     , servant
     , servant-server
     , servant-lucid
     , text
+    , unordered-containers
     , wai
     , wai-extra
     , warp
