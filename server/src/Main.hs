@@ -38,9 +38,9 @@ htmlTemplate t = do
             style_ [type_ "text/css"] "background: #444 url('/assets/back.svg');"
             title_ [] (toHtml t)
             script_ [async_ "", src_ "https://www.googletagmanager,com/gtag/js?id=UA-163141650-1"] empty
-            script_ [] (  "  window.dataLayer = window.dataLayer || [];"
-                       <> "  function gtag(){dataLayer.push(arguments);}"
-                       <> "  gtag('js', new Date());"
+            script_ [] (toHtml $ "  window.dataLayer = window.dataLayer || [];"
+                              <> "  function gtag(){dataLayer.push(arguments);}"
+                              <> "  gtag('js', new Date());"
                        )
         body_ $ do
             div_ [id_ "app"] mempty
