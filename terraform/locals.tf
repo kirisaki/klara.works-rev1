@@ -18,7 +18,7 @@ locals {
         dev = "develop"
         prod = "master"
     }[local.k]
-    docker_tag = "0.0.2"
+    docker_tag = "0.0.3"
 }
 
 locals {

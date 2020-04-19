@@ -9,10 +9,13 @@ const Nav: React.FC = () => {
     <nav className={style.nav}>
       <ul>
         <li>
-          <NavLink to="/" exact>home</NavLink>
+          <NavLink to="/" exact>Home</NavLink>
         </li>
         <li>
-          <NavLink to="/about">about</NavLink>
+          <NavLink to="/about">About</NavLink>
+        </li>
+        <li>
+          <NavLink to="/works">Works</NavLink>
         </li>
       </ul>
     </nav>
