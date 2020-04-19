@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE OverloadedLabels #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -23,8 +24,14 @@ data Language
     = Japanese
     | English
     deriving(Show, Eq, Generic, Ord)
+
 instance ToJSON Language
 instance FromJSON Language
+instance FromHttpApiData Language where
+    parseUrlPiece = \case
+        "jpn" -> Right Japanese
+        "eng" -> Right English
+        _ -> Left "unsupported"
 
 data WorkType
     = Picture
@@ -88,9 +95,11 @@ summaryHandler lang = pure $
             #id @= work ^. #id
          <: #type @= work ^. #type
          <: #meta @= meta
-         <: #cover @= fromJust (work ^. #cover) <> ".jpg"
+         <: #cover @= case work ^. #cover of
+                        Just n -> n
+                        Nothing -> work ^. #id <> ".jpg"
          <: nil
-    ) <$> M.toList sample
+    ) <$> M.toDescList sample
 
 sample :: M.Map Text WorkInternal
 sample = M.fromList 
