@@ -26,6 +26,7 @@ data Language
 
 instance ToJSON Language
 instance FromJSON Language
+instance FromJSONKey Language
 instance FromHttpApiData Language where
     parseUrlPiece = \case
         "jpn" -> Right Japanese
@@ -44,6 +45,7 @@ instance FromJSON WorkType
 type WorkMeta = Record
     '[ "title" >: Text
      , "origin" >: Maybe Text
+     , "description" >: Maybe Text
      ]
 
 type Work = Record

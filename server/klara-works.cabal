@@ -30,10 +30,16 @@ library
     , bytestring
     , case-insensitive
     , extensible
+    , directory
+    , hashable
+    , hip
     , http-types
+    , JuicyPixels
     , lens
     , lucid
     , mtl
+    , path
+    , path-io
     , servant
     , servant-server
     , servant-lucid
@@ -42,6 +48,7 @@ library
     , wai
     , wai-extra
     , warp
+    , yaml
   default-language: Haskell2010
 
 executable server
@@ -58,10 +65,16 @@ executable server
     , bytestring
     , case-insensitive
     , extensible
+    , directory
+    , hashable
+    , hip
     , http-types
+    , JuicyPixels
     , lens
     , lucid
     , mtl
+    , path
+    , path-io
     , servant
     , servant-server
     , servant-lucid
@@ -70,6 +83,7 @@ executable server
     , wai
     , wai-extra
     , warp
+    , yaml
   default-language: Haskell2010
 
 test-suite server-test
@@ -85,11 +99,17 @@ test-suite server-test
     , aeson
     , bytestring
     , extensible
+    , directory
     , case-insensitive
+    , hashable
+    , hip
     , http-types
+    , JuicyPixels
     , lens
     , lucid
     , mtl
+    , path
+    , path-io
     , servant
     , servant-server
     , servant-lucid
@@ -98,4 +118,5 @@ test-suite server-test
     , wai
     , wai-extra
     , warp
+    , yaml
   default-language: Haskell2010

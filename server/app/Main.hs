@@ -4,26 +4,44 @@
 {-# LANGUAGE TypeOperators     #-}
 module Main where
 
+import           Control.Monad
 import qualified Data.ByteString.Char8           as BSC
 import           Data.Extensible
 import qualified Data.Map.Strict                 as M
 import           Data.Text
+import           Data.Yaml
 import           Network.HTTP.Types.Status
 import           Network.Wai
 import           Network.Wai.Handler.Warp
 import           Network.Wai.Middleware.Gzip
 import           Network.Wai.Middleware.HttpAuth
+import           Path
+import           Path.IO
 import           System.Environment
+import           System.Directory
+import Control.Lens
 
 import           KlaraWorks
 import           KlaraWorks.Env
 
 main :: IO ()
 main = do
+    wenv <- traverseYaml
+    runServer wenv
+
+traverseYaml :: IO WorksEnv
+traverseYaml = do
+    dirs <- (fmap fst . listDir) =<< parseAbsDir "/assets/works"
+    name <- parseRelFile "meta.yaml"
+    let yamls = fmap (</> name) dirs
+    (WorksEnv . M.fromList) . fmap (\x -> (x ^. #id ,x)) <$> mapM decodeFileThrow (fmap toFilePath  yamls)
+
+runServer :: WorksEnv -> IO ()
+runServer wenv = do
     let settings = setPort 8080 defaultSettings
     user' <- fmap BSC.pack <$> lookupEnv "SERVER_USER"
     password' <- fmap BSC.pack <$> lookupEnv "SERVER_PASSWORD"
-    let env = Env { works = WorksEnv { list = sample}}
+    let env = Env { works = wenv }
     case (user', password') of
         (Just u, Just p) -> do
             putStrLn "Start server as private"
@@ -38,26 +56,3 @@ main = do
             runSettings settings (app env)
 
 
-sample :: M.Map Text WorkInternal
-sample = M.fromList
-    [ ( "20200228-lady"
-      , #id @= "20200228-lady"
-      <: #type @= Picture
-      <: #meta @= M.fromList
-        [ ( Japanese, #title @= "Lady" <: #origin @= Nothing <: nil )
-        , ( English, #title @= "Lady" <: #origin @= Nothing <: nil )
-        ]
-      <: #cover @= Nothing
-      <: nil
-      )
-    , ( "20200215-hamakaze"
-      , #id @= "20200215-hamakaze"
-      <: #type @= Picture
-      <: #meta @= M.fromList
-        [ ( Japanese, #title @= "浜風" <: #origin @= Just "艦隊これくしょん" <: nil )
-        , ( English, #title @= "Hamakaze" <: #origin @= Just "Kantai Collection" <: nil )
-        ]
-      <: #cover @= Nothing
-      <: nil
-      )
-    ]
