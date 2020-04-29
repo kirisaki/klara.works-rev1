@@ -64,3 +64,5 @@ steps:
       gsutil cp node_modules.tar.gz gs://${_NAME}-cache/node_modules.tar.gz
 
 timeout: 2400s
+options:
+  machineType: N1_HIGHCPU_8
