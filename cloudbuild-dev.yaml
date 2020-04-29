@@ -130,4 +130,6 @@ options:
   - GCLOUD_PROJECT=$_NAME
 
 timeout: 2400s
+options:
+  machineType: N1_HIGHCPU_8
 
