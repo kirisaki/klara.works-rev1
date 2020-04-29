@@ -106,8 +106,7 @@ options:
   - CLOUDSDK_COMPUTE_ZONE=$_ZONE
   - CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER
   - GCLOUD_PROJECT=$_NAME
+  machineType: N1_HIGHCPU_8
 
 timeout: 2400s
-options:
-  machineType: N1_HIGHCPU_8
 
