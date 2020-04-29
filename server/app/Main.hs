@@ -1,22 +1,22 @@
-{-# LANGUAGE TypeOperators #-}
-{-# LANGUAGE DataKinds #-}
-{-# LANGUAGE OverloadedLabels #-}
+{-# LANGUAGE DataKinds         #-}
+{-# LANGUAGE OverloadedLabels  #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TypeOperators     #-}
 module Main where
 
-import qualified Data.ByteString.Char8 as BSC
-import qualified Data.Map.Strict as M
-import Data.Extensible
-import Data.Text
-import Network.HTTP.Types.Status
-import Network.Wai
-import Network.Wai.Middleware.Gzip
-import Network.Wai.Middleware.HttpAuth
-import Network.Wai.Handler.Warp
-import System.Environment
+import qualified Data.ByteString.Char8           as BSC
+import           Data.Extensible
+import qualified Data.Map.Strict                 as M
+import           Data.Text
+import           Network.HTTP.Types.Status
+import           Network.Wai
+import           Network.Wai.Handler.Warp
+import           Network.Wai.Middleware.Gzip
+import           Network.Wai.Middleware.HttpAuth
+import           System.Environment
 
-import KlaraWorks
-import KlaraWorks.Env
+import           KlaraWorks
+import           KlaraWorks.Env
 
 main :: IO ()
 main = do
@@ -30,7 +30,7 @@ main = do
             let auth = basicAuth (\u' p' -> pure $ u' == u && p' == p) "Locked"
                 health app req respond = case pathInfo req of
                     ["health"] -> respond $ responseLBS status200 [] ""
-                    _ -> app req respond
+                    _          -> app req respond
             runSettings settings . health $ auth (app env)
 
         _ -> do
@@ -39,11 +39,11 @@ main = do
 
 
 sample :: M.Map Text WorkInternal
-sample = M.fromList 
+sample = M.fromList
     [ ( "20200228-lady"
-      , #id @= "20200228-lady" 
-      <: #type @= Picture 
-      <: #meta @= M.fromList 
+      , #id @= "20200228-lady"
+      <: #type @= Picture
+      <: #meta @= M.fromList
         [ ( Japanese, #title @= "Lady" <: #origin @= Nothing <: nil )
         , ( English, #title @= "Lady" <: #origin @= Nothing <: nil )
         ]
@@ -51,9 +51,9 @@ sample = M.fromList
       <: nil
       )
     , ( "20200215-hamakaze"
-      , #id @= "20200215-hamakaze" 
-      <: #type @= Picture 
-      <: #meta @= M.fromList 
+      , #id @= "20200215-hamakaze"
+      <: #type @= Picture
+      <: #meta @= M.fromList
         [ ( Japanese, #title @= "浜風" <: #origin @= Just "艦隊これくしょん" <: nil )
         , ( English, #title @= "Hamakaze" <: #origin @= Just "Kantai Collection" <: nil )
         ]

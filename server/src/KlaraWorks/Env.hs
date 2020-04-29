@@ -1,23 +1,23 @@
-{-# LANGUAGE DataKinds #-}
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DataKinds         #-}
+{-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE OverloadedLabels #-}
+{-# LANGUAGE LambdaCase        #-}
+{-# LANGUAGE OverloadedLabels  #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE TypeOperators #-}
+{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE TypeOperators     #-}
 module KlaraWorks.Env where
 
-import Control.Monad.Reader
-import Data.Aeson
-import Data.Extensible
-import qualified Data.Map.Strict as M
-import Data.Text
-import Control.Lens
-import GHC.Generics
-import Network.Wai
-import Servant
-import Servant.API
+import           Control.Lens
+import           Control.Monad.Reader
+import           Data.Aeson
+import           Data.Extensible
+import qualified Data.Map.Strict      as M
+import           Data.Text
+import           GHC.Generics
+import           Network.Wai
+import           Servant
+import           Servant.API
 
 data Language
     = Japanese
@@ -46,26 +46,26 @@ type WorkMeta = Record
      , "origin" >: Maybe Text
      ]
 
-type Work = Record 
+type Work = Record
     '[ "id" >: Text
      , "type" >: WorkType
      , "meta" >: WorkMeta
      , "cover" >: Text
      ]
-type WorkInternal = Record 
+type WorkInternal = Record
     '[ "id" >: Text
      , "type" >: WorkType
      , "meta" >: M.Map Language WorkMeta
      , "cover" >: Maybe Text
      ]
 
-newtype WorksEnv = WorksEnv 
+newtype WorksEnv = WorksEnv
     { list :: M.Map Text WorkInternal
     }
 
 makeLensesWith classyRules_ ''WorksEnv
 
-newtype Env = Env 
+newtype Env = Env
     { works :: WorksEnv
     }
 

@@ -1,13 +1,13 @@
 {-# LANGUAGE ExtendedDefaultRules #-}
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings    #-}
 module KlaraWorks.Html where
 
-import Data.Text
-import Lucid
+import           Data.Text
+import           Lucid
 
 htmlTemplate :: Text -> Html ()
 htmlTemplate t = do
-    doctype_ 
+    doctype_
     html_ $ do
         head_ $ do
             meta_ [charset_ "utf-8"]
