@@ -1,15 +1,13 @@
 {-# LANGUAGE DataKinds #-}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE OverloadedLabels #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeOperators #-}
 module KlaraWorks.Works where
 
+import Control.Monad.Reader
 import Control.Lens
 import Data.Extensible
 import Data.Text
-import Data.Aeson
 import Data.Int
 import qualified Data.Map.Strict as M
 import GHC.Generics
@@ -17,49 +15,11 @@ import Servant
 import Servant.API
 import Servant.Server
 
+import KlaraWorks.Env
+
 -- temporary import
 import Data.Maybe
 
-data Language
-    = Japanese
-    | English
-    deriving(Show, Eq, Generic, Ord)
-
-instance ToJSON Language
-instance FromJSON Language
-instance FromHttpApiData Language where
-    parseUrlPiece = \case
-        "jpn" -> Right Japanese
-        "eng" -> Right English
-        _ -> Left "unsupported"
-
-data WorkType
-    = Picture
-    | Manga
-    | Font
-    deriving(Show, Eq, Generic)
-
-instance ToJSON WorkType
-instance FromJSON WorkType
-
-type WorkMeta = Record
-    '[ "title" >: Text
-     , "origin" >: Maybe Text
-     ]
-
-type Work = Record 
-    '[ "id" >: Text
-     , "type" >: WorkType
-     , "meta" >: WorkMeta
-     , "cover" >: Text
-     ]
-
-type WorkInternal = Record 
-    '[ "id" >: Text
-     , "type" >: WorkType
-     , "meta" >: M.Map Language WorkMeta
-     , "cover" >: Maybe Text
-     ]
 
 
 
@@ -68,11 +28,11 @@ type WorksApi = "works" :>
     :<|> Capture "lang" Language :> Get '[JSON] [Work]
     )
 
-worksServer :: Server WorksApi
+worksServer :: (HasWorksEnv env) => ServerT WorksApi (ApiHandler env)
 worksServer = workHandler
             :<|> summaryHandler
 
-workHandler :: Language -> Text -> Servant.Handler Work
+workHandler :: (HasWorksEnv env) => Language -> Text -> ApiHandler env Work
 workHandler lang wid = do
     work <- case M.lookup wid sample of
               Just w -> pure w
@@ -86,7 +46,7 @@ workHandler lang wid = do
          <: #cover @= fromJust (work ^. #cover) <> ".jpg"
          <: nil
 
-summaryHandler :: Language -> Servant.Handler [Work]
+summaryHandler :: (HasWorksEnv env) => Language -> ApiHandler env [Work]
 summaryHandler lang = pure $  
     (\(k, work) -> 
         let

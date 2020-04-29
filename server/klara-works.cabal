@@ -19,6 +19,7 @@ library
       KlaraWorks
       KlaraWorks.Html
       KlaraWorks.Works
+      KlaraWorks.Env
   other-modules:
       Paths_klara_works
   hs-source-dirs:
@@ -32,6 +33,7 @@ library
     , http-types
     , lens
     , lucid
+    , mtl
     , servant
     , servant-server
     , servant-lucid
@@ -59,6 +61,7 @@ executable server
     , http-types
     , lens
     , lucid
+    , mtl
     , servant
     , servant-server
     , servant-lucid
@@ -86,6 +89,7 @@ test-suite server-test
     , http-types
     , lens
     , lucid
+    , mtl
     , servant
     , servant-server
     , servant-lucid

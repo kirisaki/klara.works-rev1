@@ -5,6 +5,8 @@
 {-# LANGUAGE TypeOperators #-}
 module KlaraWorks where
 
+
+import Control.Monad.Reader
 import Data.Proxy
 import Lucid
 import Lucid.Servant
@@ -16,6 +18,7 @@ import Servant.HTML.Lucid
 
 import KlaraWorks.Html
 import KlaraWorks.Works
+import KlaraWorks.Env
 
 type Api =  "about" :> Get '[HTML] (Html ())
         :<|> "works" :> Get '[HTML] (Html ())
@@ -23,13 +26,15 @@ type Api =  "about" :> Get '[HTML] (Html ())
         :<|> "assets" :> Raw
         :<|> "api" :> "v0" :> WorksApi
 
-server :: Server Api
+server :: (HasWorksEnv env) => ServerT Api (ApiHandler env) 
 server =  pure (htmlTemplate "Klara Works - About")
         :<|> pure (htmlTemplate "Klara Works - Works")
         :<|> pure (htmlTemplate "Klara Works")
         :<|> serveDirectoryWebApp "/assets"
         :<|> worksServer 
 
-app :: Application
-app = gzip def { gzipFiles = GzipCompress } $ serve (Proxy @ Api) server
+app :: Env -> Application
+app e = gzip def { gzipFiles = GzipCompress } 
+    $ serve (Proxy @ Api) 
+    $ hoistServer (Proxy @ Api) (`runReaderT` e) server
 
