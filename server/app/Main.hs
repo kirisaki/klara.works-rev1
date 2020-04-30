@@ -50,13 +50,13 @@ generateThumbnails (WorksEnv kv) = do
                     (Nothing, Just j) -> pure j
                     _                 -> throwString "not found cover image"
         dist <- (thumbsDir </>) <$> parseRelFile (unpack (v ^. #id <> ".jpg"))
-        img <- readImageRGB VU $ toFilePath src
+        img <- readImageRGB VS $ toFilePath src
         let (x, y) = dims img
             size = if x > y
                         then (300, ceiling $ 300*(fromIntegral y / fromIntegral x))
                         else (ceiling $ 300*(fromIntegral x / fromIntegral y), 300)
-            img' = resize Bilinear Edge size img
-        writeImage (toFilePath dist) img'
+            img' = resize Bilinear Edge size $ applyFilter (gaussianBlur 0.5) img
+        writeImageExact JPG [JPGQuality 70] (toFilePath dist) img'
 
 traverseYaml :: IO WorksEnv
 traverseYaml = do
