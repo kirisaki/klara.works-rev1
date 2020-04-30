@@ -40,6 +40,7 @@ library
     , mtl
     , path
     , path-io
+    , safe-exceptions
     , servant
     , servant-server
     , servant-lucid
@@ -75,6 +76,7 @@ executable server
     , mtl
     , path
     , path-io
+    , safe-exceptions
     , servant
     , servant-server
     , servant-lucid
@@ -110,6 +112,7 @@ test-suite server-test
     , mtl
     , path
     , path-io
+    , safe-exceptions
     , servant
     , servant-server
     , servant-lucid
