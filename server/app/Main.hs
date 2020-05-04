@@ -53,7 +53,7 @@ generateThumbnails (WorksEnv kv) = do
         img <- readImageRGB VS $ toFilePath src
         let (x, y) = dims img
             size = (250, ceiling $ 250 * (fromIntegral y / fromIntegral x))
-            img' = resize Bilinear Edge size $ applyFilter (gaussianBlur 0.5) img
+            img' = resize (Bicubic (-1.0)) Edge size $ applyFilter (gaussianBlur 0.5) img
         writeImageExact JPG [JPGQuality 70] (toFilePath dist) img'
 
 traverseYaml :: IO WorksEnv
