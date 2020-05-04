@@ -1,38 +1,39 @@
-.container {
+.home {
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 
-.home {
+.section {
     padding-left: 0.7rem;
     border-color: var(--pink);
     border-style: solid;
     border-width: 0 0 0 5px;
 }
 
-.home > h1 {
+.logo {
     width: 15rem;
     height: 3rem;
     background: transparent url('/assets/klaraworks.svg') no-repeat
 }
 
-.home > h1 > span {
+.logo > span {
     display: none;
 }
 
-.home p {
+.section p {
     padding: 0.2rem 0;
 }
 
-.home td {
+.section td {
     padding: 0.2rem;
 }
 
 @media screen and (max-width: 480px) {
-    .home td {
+    .section td {
         padding: 0.4rem;
     }
 }

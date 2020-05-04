@@ -22,6 +22,11 @@ const resolve: Resolve = {
 const devServer: WebpackDevServer.Configuration = {
   host: '0.0.0.0',
   historyApiFallback: true,
+  proxy: {
+    '/api': 'http://localhost:8000',
+    '/assets/thumbnails': 'http://localhost:8000',
+    '/assets/works': 'http://localhost:8000',
+  },
 }
 
 

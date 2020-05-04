@@ -16,19 +16,17 @@ export const App: React.FC = () => {
   const location = useLocation()
   return (
     <>
-      <div className={style.container}>
-        <Switch location={location}>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/works">
-            <Works />
-          </Route>
-        </Switch>
-      </div>
+      <Switch location={location}>
+        <Route path="/" exact>
+          <Home />
+        </Route>
+        <Route path="/about">
+          <About />
+        </Route>
+        <Route path="/works">
+          <Works />
+        </Route>
+      </Switch>
       <Nav />
     </>
   )

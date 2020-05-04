@@ -52,9 +52,7 @@ generateThumbnails (WorksEnv kv) = do
         dist <- (thumbsDir </>) <$> parseRelFile (unpack (v ^. #id <> ".jpg"))
         img <- readImageRGB VS $ toFilePath src
         let (x, y) = dims img
-            size = if x > y
-                        then (300, ceiling $ 300*(fromIntegral y / fromIntegral x))
-                        else (ceiling $ 300*(fromIntegral x / fromIntegral y), 300)
+            size = (250, ceiling $ 250 * (fromIntegral y / fromIntegral x))
             img' = resize Bilinear Edge size $ applyFilter (gaussianBlur 0.5) img
         writeImageExact JPG [JPGQuality 70] (toFilePath dist) img'
 
