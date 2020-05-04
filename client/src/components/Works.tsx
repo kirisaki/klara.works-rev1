@@ -4,6 +4,7 @@ import style from './Works.css'
 import { usePage } from '../hooks/page'
 import { req } from '../lib/req'
 import { Work } from '../types'
+import WorksSummary from './WorksSummary'
 
 export const Works: React.FC = () => {
   usePage('Works')
@@ -16,8 +17,8 @@ export const Works: React.FC = () => {
     f()
   }, [])
   return (
-    <article className={style.about}>
-      <div>{works.map(work => work.id)}</div>
+    <article className={style.works}>
+      {works.map(work => <WorksSummary work={work} />)}
     </article>
   )
 }

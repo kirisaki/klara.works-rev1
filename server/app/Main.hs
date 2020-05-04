@@ -49,14 +49,16 @@ generateThumbnails (WorksEnv kv) = do
                     (Just p, _)       -> pure p
                     (Nothing, Just j) -> pure j
                     _                 -> throwString "not found cover image"
-        dist <- (thumbsDir </>) <$> parseRelFile (unpack (v ^. #id <> ".jpg"))
+        distPort <- (thumbsDir </>) <$> parseRelFile (unpack (v ^. #id <> "-port.jpg"))
+        distLand <- (thumbsDir </>) <$> parseRelFile (unpack (v ^. #id <> "-land.jpg"))
         img <- readImageRGB VS $ toFilePath src
         let (x, y) = dims img
-            size = if x > y
-                        then (300, ceiling $ 300*(fromIntegral y / fromIntegral x))
-                        else (ceiling $ 300*(fromIntegral x / fromIntegral y), 300)
-            img' = resize Bilinear Edge size $ applyFilter (gaussianBlur 0.5) img
-        writeImageExact JPG [JPGQuality 70] (toFilePath dist) img'
+            sizeLand = (250, ceiling $ 250 * (fromIntegral y / fromIntegral x))
+            sizePort= (ceiling $ 250 * (fromIntegral x / fromIntegral y), 250)
+            imgLand = resize (Bicubic (-1.0)) Edge sizeLand $ applyFilter (gaussianBlur 0.5) img
+            imgPort = resize (Bicubic (-1.0)) Edge sizePort $ applyFilter (gaussianBlur 0.5) img
+        writeImageExact JPG [JPGQuality 70] (toFilePath distLand) imgLand
+        writeImageExact JPG [JPGQuality 70] (toFilePath distPort) imgPort
 
 traverseYaml :: IO WorksEnv
 traverseYaml = do

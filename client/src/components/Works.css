@@ -1,0 +1,15 @@
+.works {
+    width: 100%;
+    padding-top: 3rem;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width: 480px){
+    .works {
+        padding-top: 0;
+    }
+}
+
+

@@ -1,0 +1,12 @@
+.summary {
+    padding: 0.5rem;
+}
+
+@media screen and (max-width: 480px){
+    .summary {
+        width: 100%;
+    }
+    .summary > img {
+        width: 100%;
+    }
+}

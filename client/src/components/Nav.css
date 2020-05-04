@@ -4,6 +4,7 @@
     bottom: calc(100vh - 3rem);
     right: 0;
     z-index: 100;
+    background: rgba(0,0,0,0.5);
 }
 
 @media screen and (max-width: 480px) {
@@ -12,6 +13,7 @@
         position: fixed;
         bottom: 0;
         background: linear-gradient(transparent, #000);
+        border: 0px;
     }
 }
 

@@ -15,7 +15,7 @@ const NavLink: React.FC<Props> = ({to, children, exact}) => {
     <Link
       to={to}
       className={match ? [style.link, style.active].join(' ') : style.link}>
-      <div>{children}</div>
+      {children}
     </Link>
   )
 }
