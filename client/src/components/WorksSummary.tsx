@@ -8,9 +8,15 @@ type Props = {
 }
 
 export const WorksSummary: React.FC<Props> = ({ work }) => {
-  const thumb = '/assets/thumbnails/' + work.id + '.jpg'
+  const thumbLand = '/assets/thumbnails/' + work.id + '-land.jpg'
+  const thumbPort = '/assets/thumbnails/' + work.id + '-port.jpg'
   return (
-      <div className={style.summary}><img src={thumb} /></div>
+      <div className={style.summary}>
+        <picture>
+          <source media="(max-width: 480px)" srcSet={thumbPort} sizes="100vw" />
+          <img src={thumbLand} />
+        </picture>
+      </div>
   )
 }
 
