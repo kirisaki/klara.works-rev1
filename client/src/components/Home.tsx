@@ -22,6 +22,8 @@ export const Home: React.FC = () => {
             <tr><td>Twitter: </td><td><a href="https://twitter.com/A_kirisaki">https://twitter.com/A_kirisaki</a></td></tr>
             <tr><td>pixiv: </td><td><a href="https://pixiv.me/kirisaki">https://pixiv.me/kirisaki</a></td></tr>
             <tr><td>GitHub: </td><td><a href="https://github.com/kirisaki">https://github.com/kirisaki</a></td></tr>
+            <tr><td>Facebook: </td><td><a href="https://www.facebook.com/akihito.kirisaki">https://www.facebook.com/akihito.kirisaki</a></td></tr>
+            <tr><td>Instagram: </td><td><a href="https://www.instagram.com/akihito.kirisaki/">https://www.instagram.com/akihito.kirisaki/</a></td></tr>
           </tbody>
         </table>
       </section>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import style from './WorksSummary.css'
 import { Work } from '../types'
+import {Link} from 'react-router-dom'
 
 type Props = {
   work: Work,
@@ -15,18 +16,16 @@ export const WorksSummary: React.FC<Props> = ({ work }) => {
   const day = work.id.substring(6, 8)
   const date = `${year}-${month}-${day}`
   return (
-      <div className={style.summary}>
-        <picture>
+      <Link to={`/works/${work.id}`} className={style.summary}>
+        <picture className={style.thumbnail}>
           <source media="(max-width: 480px)" srcSet={thumbPort} sizes="100vw" />
           <img src={thumbLand} />
         </picture>
         <p>
-          {date}
+            {date}<br />
+            {work.meta.title}
         </p>
-        <p>
-          {work.meta.title}
-        </p>
-      </div>
+      </Link>
   )
 }
 

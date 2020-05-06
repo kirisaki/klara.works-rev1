@@ -8,7 +8,7 @@
 
 @media screen and (max-width: 480px){
     .works {
-        padding-top: 0;
+        padding: 0 0 3rem;
     }
 }
 

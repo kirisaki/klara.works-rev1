@@ -1,6 +1,12 @@
 .summary {
     position: relative;
+    display: block;
     padding: 0.3rem;
+}
+
+
+.summary {
+    text-decoration: none;
 }
 
 @media screen and (max-width: 480px){
@@ -8,7 +14,7 @@
         padding: 0.25rem 0.5rem;
         width: 100%;
     }
-    .summary > picture > img{
+    .thumbnail > img{
         width: 100%;
     }
 }
