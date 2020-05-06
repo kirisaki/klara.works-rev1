@@ -4,6 +4,7 @@
     --white: #f0f0f0;
     --pink: #fc2063;
     --peach: #fd5185;
+    --clear-black: rgba(0, 0, 0, 0.5);
 }
 
 :root {
