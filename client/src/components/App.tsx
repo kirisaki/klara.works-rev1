@@ -9,6 +9,7 @@ import Nav from './Nav'
 import Home from './Home'
 import About from './About'
 import Works from './Works'
+import WorksDetail from './WorksDetail'
 
 import style from './App.css'
 
@@ -22,6 +23,9 @@ export const App: React.FC = () => {
         </Route>
         <Route path="/about">
           <About />
+        </Route>
+        <Route path="/works/:id">
+          <WorksDetail />
         </Route>
         <Route path="/works">
           <Works />

@@ -18,11 +18,10 @@ export const Works: React.FC = () => {
   }, [])
   return (
     <article className={style.works}>
-      {works.map(work => <WorksSummary work={work} />)}
+      {works.map(work => <WorksSummary key={work.id} work={work} />)}
     </article>
   )
 }
 
 export default Works
-
 
